@@ -45,13 +45,6 @@ Pour prévisualiser le résultat compilé :
 npm run preview
 ```
 
-## Déploiement sur Plesk
-
-Le site est configuré pour être publié à l’adresse `/API/`. Après `npm run build`,
-téléverse le contenu du dossier `dist/` dans le dossier `httpdocs/API/` de Plesk
-(pas le dossier `dist` lui-même). Le fichier `public/.htaccess` est copié dans
-`dist/` et redirige les routes de détail vers `index.html`.
-
 Tailwind peut être recompilé séparément pendant le développement :
 
 ```bash
