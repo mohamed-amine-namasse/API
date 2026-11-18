@@ -2,6 +2,9 @@ import { createIcons, Gamepad2, Search, Star } from "lucide";
 
 const API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 const BASE_URL = "https://api.rawg.io/api";
+const APP_BASE_URL = import.meta.env.BASE_URL;
+const APP_BASE_PATH =
+  APP_BASE_URL === "/" ? "" : APP_BASE_URL.replace(/\/$/, "");
 const ICONS = { Gamepad2, Search, Star };
 
 const searchInput = document.getElementById("searchInput");
@@ -20,7 +23,7 @@ function initializeApp() {
   renderIcons();
   createBackgroundParticles();
 
-  const gameMatch = window.location.pathname.match(/^\/game\/(\d+)\/?$/);
+  const gameMatch = getAppPathname().match(/^\/game\/(\d+)\/?$/);
   if (gameMatch) {
     gamesView.classList.add("hidden");
     gameDetails.classList.remove("hidden");
@@ -28,7 +31,7 @@ function initializeApp() {
   }
 
   homeBtn.addEventListener("click", () => {
-    window.location.href = "/";
+    window.location.href = APP_BASE_URL;
   });
 
   searchInput.addEventListener("input", (event) => {
@@ -60,6 +63,17 @@ function initializeApp() {
   } else {
     loadTrendingGames();
   }
+}
+
+function getAppPathname() {
+  const pathname = window.location.pathname;
+  if (
+    APP_BASE_PATH &&
+    (pathname === APP_BASE_PATH || pathname.startsWith(`${APP_BASE_PATH}/`))
+  ) {
+    return pathname.slice(APP_BASE_PATH.length) || "/";
+  }
+  return pathname;
 }
 
 function renderIcons(root = document) {
@@ -134,7 +148,7 @@ function displayGameDetails(game) {
 
   const backLink = document.createElement("a");
   backLink.className = "detail-back";
-  backLink.href = "/";
+  backLink.href = APP_BASE_URL;
   backLink.textContent = "← Retour aux jeux";
   gameDetails.append(backLink);
 
@@ -279,7 +293,7 @@ function displayGames(games) {
 
     const card = document.createElement("a");
     card.className = "card";
-    card.href = `/game/${game.id}`;
+    card.href = `${APP_BASE_URL}game/${game.id}`;
     card.setAttribute("aria-label", `Voir les détails de ${game.name}`);
     card.innerHTML = `
       <div>

@@ -45,6 +45,13 @@ Pour prévisualiser le résultat compilé :
 npm run preview
 ```
 
+## Déploiement sur Plesk
+
+Le site est configuré pour être publié à l’adresse `/API/`. Après `npm run build`,
+téléverse le contenu du dossier `dist/` dans le dossier `httpdocs/API/` de Plesk
+(pas le dossier `dist` lui-même). Le fichier `public/.htaccess` est copié dans
+`dist/` et redirige les routes de détail vers `index.html`.
+
 Tailwind peut être recompilé séparément pendant le développement :
 
 ```bash
@@ -56,7 +63,7 @@ Les styles spécifiques à l’application sont dans `css/app.css`.
 ## Fonctionnalités
 
 - Affichage et recherche de jeux.
-- Page de détails à l’adresse `/game/<id>`.
+- Page de détails à l’adresse `/API/game/<id>` une fois déployée.
 - Fond animé avec particules en CSS et JavaScript natif.
 - Icônes Lucide.
 
@@ -78,3 +85,7 @@ Les styles spécifiques à l’application sont dans `css/app.css`.
 ## Note sur la clé API
 
 Les variables `VITE_*` sont intégrées au code client au moment du build et sont visibles par les visiteurs. Cette clé RAWG convient à une démo ou à un usage local; pour une application publique, il faut passer les requêtes par un service backend si la clé doit rester secrète.
+
+## Version en ligne du projet
+
+Consultable directement sur https://serveurcda.alwaysdata.net/
